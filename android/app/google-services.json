@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "641906560409",
+    "project_id": "wather-cast",
+    "storage_bucket": "wather-cast.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641906560409:android:844874fcacd5b2a0c7d708",
+        "android_client_info": {
+          "package_name": "com.example.weather_cast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCspdqKRJcjjcNV8efmpMEnFoMtBQNMgzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
