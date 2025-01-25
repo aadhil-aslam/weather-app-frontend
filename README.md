@@ -43,8 +43,9 @@ Before running the application, ensure you have the following:
 
 4. Configure Firebase
     (Ensure you have enabled Authentication and Firestore Database in your Firebase project.)
+5. Configure backend IP address.
 
-5. Start the app: 
+6. Start the app: 
     flutter run
 
 Build the app for production:

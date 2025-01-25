@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_cast/services/reminder_service.dart';
@@ -63,9 +64,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 208, 226, 242),
+      // backgroundColor: const Color.fromARGB(255, 208, 226, 242),
+      // backgroundColor: const Color.fromARGB(255, 185, 207, 227),
+      backgroundColor: const Color.fromARGB(255, 193, 213, 230),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 120, 156, 188),
+        backgroundColor: const Color.fromARGB(255, 106, 138, 165),
         title: Text(
           'Weather App',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
@@ -98,10 +101,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : _weatherData == null || _forecastData == null
+          : _weatherData == null
               ? Center(
                   child: Text('Weather not available',
-                      style: TextStyle(fontSize: 18, color: Colors.grey)))
+                      style: TextStyle(fontSize: 18, color: Colors.black54)))
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -113,31 +116,63 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Text(
                         _weatherData!['name'],
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 26,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
 
                       // SizedBox(height: 8),
-                      SizedBox(height: 2),
+                      // SizedBox(height: 2),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Stack(children: [
+                              Opacity(
+                                  child: Image.network(
+                                      getWeatherIconUrl(
+                                          _weatherData!['weather'][0]['icon']),
+                                      width: 83,
+                                      height: 82,
+                                      // color: const Color.fromARGB(255, 106, 138, 165),
+                                      color: Colors.black),
+                                  opacity: 0.3),
+                              ClipRect(
+                                  child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 3.0, sigmaY: 2.0),
+                                child: Image.network(
+                                  getWeatherIconUrl(
+                                      _weatherData!['weather'][0]['icon']),
+                                  width: 80,
+                                  height: 80,
+                                  // color: const Color.fromARGB(255, 106, 138, 165),
+                                ),
+                              ))
+                            ]),
                             // Display weather icon based on the API's icon code
-                            Image.network(
-                              getWeatherIconUrl(
-                                  _weatherData!['weather'][0]['icon']),
-                              width: 80,
-                              height: 80,
-                            ),
+                            // Image.network(
+                            //   getWeatherIconUrl(
+                            //       _weatherData!['weather'][0]['icon']),
+                            //   width: 80,
+                            //   height: 80,
+                            // ),
                             Text(
                               '${_weatherData!['main']['temp']}°C',
                               style: TextStyle(
-                                fontSize: 50,
+                                fontSize: 40,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
                           ]),
+                      SizedBox(height: 2),
+
+                      Text(
+                        'L:${_weatherData!['main']['temp_min']} H:${_weatherData!['main']['temp_max']}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                       SizedBox(height: 20),
                       Card(
                         // color: const Color.fromARGB(255, 255, 246, 246),
@@ -215,7 +250,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             "Today's Hourly Forecast",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
         Container(
@@ -230,47 +265,79 @@ class _WeatherScreenState extends State<WeatherScreen> {
               final description = weather['weather'][0]['description'];
 
               return Card(
-                // color: const Color.fromARGB(255, 184, 197, 208),
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                elevation: 1,
+                // color: const Color.fromARGB(255, 205, 221, 228),
+                margin: EdgeInsets.symmetric(horizontal: 6),
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${time.hour}:00',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+
+                      // border: Border.all(
+                      //     color: const Color.fromARGB(255, 120, 156, 188),
+                      //     width: 1.5), // Optional border
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${time.hour}:00',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 5),
+                          Stack(children: [
+                            Opacity(
+                                child: Image.network(
+                                    getWeatherIconUrl(
+                                        weather!['weather'][0]['icon']),
+                                    width: 43,
+                                    height: 42,
+                                    // color: const Color.fromARGB(255, 106, 138, 165),
+                                    color: Colors.black),
+                                opacity: 0.35),
+                            ClipRect(
+                                child: BackdropFilter(
+                              filter:
+                                  ImageFilter.blur(sigmaX: 4.0, sigmaY: 3.0),
+                              child: Image.network(
+                                getWeatherIconUrl(
+                                    weather!['weather'][0]['icon']),
+                                width: 40,
+                                height: 40,
+                                // color: const Color.fromARGB(255, 106, 138, 165),
+                              ),
+                            ))
+                          ]),
+                          // Image.network(
+                          //   getWeatherIconUrl(weather!['weather'][0]['icon']),
+                          //   width: 40,
+                          //   height: 40,
+                          //   // color: const Color.fromARGB(255, 106, 138, 165),
+                          // ),
+                          // Icon(Icons.thermostat, size: 28),
+                          Text(
+                            '$temp°C',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            description,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          // IconButton(
+                          //   icon: Icon(Icons.notifications),
+                          //   onPressed: () {
+                          //     _showReminderDialog(time, temp, description);
+                          //   },
+                          // ),
+                        ],
                       ),
-                      SizedBox(height: 5),
-                      Image.network(
-                        getWeatherIconUrl(weather!['weather'][0]['icon']),
-                        width: 40,
-                        height: 40,
-                      ),
-                      // Icon(Icons.thermostat, size: 28),
-                      Text(
-                        '$temp°C',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        description,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      // IconButton(
-                      //   icon: Icon(Icons.notifications),
-                      //   onPressed: () {
-                      //     _showReminderDialog(time, temp, description);
-                      //   },
-                      // ),
-                    ],
-                  ),
-                ),
+                    )),
               );
             },
           ),
@@ -282,7 +349,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             '5-Day Forecast',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
         Column(
@@ -314,13 +381,38 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             final description =
                                 weather['weather'][0]['description'];
                             return ListTile(
-                              leading: Image.network(
-                                getWeatherIconUrl(
-                                    weather!['weather'][0]['icon']),
-                                width: 40,
-                                height: 40,
-                              ),
-                              title: Text('$temp°C - $description'),
+                              leading: Stack(children: [
+                                Opacity(
+                                    child: Image.network(
+                                        getWeatherIconUrl(
+                                            weather!['weather'][0]['icon']),
+                                        width: 43,
+                                        height: 42,
+                                        // color: const Color.fromARGB(255, 106, 138, 165),
+                                        color: Colors.black),
+                                    opacity: 0.35),
+                                ClipRect(
+                                    child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 4.0, sigmaY: 3.0),
+                                  child: Image.network(
+                                    getWeatherIconUrl(
+                                        weather!['weather'][0]['icon']),
+                                    width: 40,
+                                    height: 40,
+                                    // color: const Color.fromARGB(255, 106, 138, 165),
+                                  ),
+                                ))
+                              ]),
+                              // Image.network(
+                              //       getWeatherIconUrl(
+                              //           weather!['weather'][0]['icon']),
+                              //       width: 40,
+                              //       height: 40,
+                              //       color: const Color.fromARGB(255, 106, 138, 165),
+                              //     ),
+                              title: Text('$temp°C - $description',
+                                  style: TextStyle(fontSize: 14)),
                               subtitle: Text('${time.hour}:00'),
                               trailing: IconButton(
                                 icon: Icon(
@@ -485,18 +577,18 @@ class WeatherDetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 28, color: Colors.blueGrey),
+        Icon(icon, size: 22, color: const Color.fromARGB(255, 106, 138, 165)),
         SizedBox(width: 10),
         Expanded(
           child: Text(
             label,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
         ),
         Text(
           value,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         ),

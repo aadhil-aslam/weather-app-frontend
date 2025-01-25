@@ -196,19 +196,32 @@ class _RemindersScreenState extends State<RemindersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 193, 213, 230),
       appBar: AppBar(
-        title: Text('Reminders'),
+        backgroundColor: const Color.fromARGB(255, 106, 138, 165),
+        title: Text(
+          'Reminders',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add, color: Colors.white),
             onPressed: () => _showReminderDialog(),
           ),
         ],
       ),
       body: _reminders.isEmpty
           ? Center(
+              child: TextButton(
+              onPressed: _showReminderDialog,
               child: Text('Add weather reminders',
-                  style: TextStyle(fontSize: 18, color: Colors.grey)))
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black54,
+                      fontSize: 18)),
+            ))
+          // child: TextButton(child: Text('Add weather reminders',
+          //      style: TextButton.styleFrom((fontSize: 18, color: Colors.black87)))
           //     ? Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _reminders.length,
@@ -216,13 +229,14 @@ class _RemindersScreenState extends State<RemindersScreen> {
                 final reminder = _reminders[index];
                 DateTime reminderTime = DateTime.parse(reminder['time']);
                 return ListTile(
+                  leading: Icon(Icons.notifications_active_outlined),
                   title: Text(reminder['title']),
                   subtitle: Text(
                     // ${reminder['description']}\n
                     '${DateFormat('yyyy-MM-dd HH:mm').format(reminderTime)}',
                     style: TextStyle(fontSize: 14),
                   ),
-                  isThreeLine: true,
+                  // isThreeLine: true,
                   trailing: IconButton(
                     icon: Icon(Icons.delete, color: Colors.red),
                     onPressed: () {

@@ -102,7 +102,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blueGrey,
+                    backgroundColor: const Color.fromARGB(255, 106, 138, 165),
                     textStyle: const TextStyle(fontSize: 15)),
                 onPressed: _authenticate,
                 child: Text(_isLogin ? 'Login' : 'Sign Up',
@@ -120,8 +120,8 @@ class _AuthScreenState extends State<AuthScreen> {
               },
               child: Text(
                 style: TextStyle(
-                  color: Colors.blueGrey,
-                ),
+                    color: const Color.fromARGB(255, 106, 138, 165),
+                    fontWeight: FontWeight.w600),
                 _isLogin
                     ? 'Create an account'
                     : 'Already have an account? Login',
